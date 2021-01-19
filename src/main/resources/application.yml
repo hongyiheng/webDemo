@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: hyh
+
+  cloud:
+    consul:
+      host: 192.168.189.120
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
