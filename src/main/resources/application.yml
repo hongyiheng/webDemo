@@ -11,3 +11,5 @@ spring:
       port: 8500
       discovery:
         service-name: ${spring.application.name}
+
+gateway: 192.168.189.120:9200
