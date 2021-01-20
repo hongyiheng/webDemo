@@ -13,7 +13,7 @@ public class TestController {
 
     @PostMapping(value = "/StringMethod")
     public String StringMethod(@RequestBody String str) {
-        return str;
+        return port;
     }
 
 }
