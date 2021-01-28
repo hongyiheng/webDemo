@@ -1,9 +1,22 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: hyh
+
+
+#  kafka:
+#    bootstrap-servers: 192.168.189.120:9092
+#    consumer:
+#      auto-commit-interval: 100
+#      auto-offset-reset: earliest
+#      enable-auto-commit: true
+#      group-id: test-consumer-group
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#    producer:
+#      batch-size: 16384
+#      buffer-memory: 33554432
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   cloud:
     consul:
@@ -13,3 +26,24 @@ spring:
         service-name: ${spring.application.name}
 
 gateway: 192.168.189.120:9200
+
+http:
+  port: 8888
+
+server:
+  port: 9999
+  ssl:
+    key-store: classpath:client.p12
+    key-store-password: 123456
+    keyAlias: client
+    keyStoreType: PKCS12
+
+mail:
+  from: me@localhost
+  host: localhost
+  password: ''
+  port: 25
+  smtp:
+    auth: false
+    starttls-enable: false
+  username: ''
