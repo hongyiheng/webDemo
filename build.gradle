@@ -8,6 +8,12 @@ group = 'com.hyh'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -39,8 +45,11 @@ dependencies {
 // https://mvnrepository.com/artifact/cn.hutool/hutool-all
     compile group: 'cn.hutool', name: 'hutool-all', version: '5.5.0'
 
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+    compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
+    compile group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: '2.0.0.RELEASE'
+
+    compile group: 'io.springfox', name: 'springfox-swagger2', version:'3.0.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version:'3.0.0'
 
 
 
