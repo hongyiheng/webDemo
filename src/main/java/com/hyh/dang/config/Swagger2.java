@@ -21,11 +21,11 @@ public class Swagger2 {
                 .apis(RequestHandlerSelectors.basePackage("com.hyh.dang.controller"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(new ApiInfoBuilder()
-                        .title("SpringBoot整合Swagger")
-                        .description("SpringBoot整合Swagger，详细信息......")
-                        .version("9.0")
-                        .license("The Apache License")
-                        .licenseUrl("http://www.baidu.com")
+                        .title("✍ SegmentFault")
+//                        .description("SpringBoot整合Swagger，详细信息......")
+//                        .version("9.0")
+//                        .license("The Apache License")
+//                        .licenseUrl("http://www.baidu.com")
                         .build());
     }
 }

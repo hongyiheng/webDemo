@@ -1,33 +1,38 @@
 package com.hyh.dang.entity;
 
-public class ConsulInfo {
-    private String serviceName;
+import java.io.Serializable;
+import java.util.Date;
 
-    private String status;
+public class ConsulInfo extends ConsulInfoKey implements Serializable {
+    private Byte alive;
 
-    private String serviceID;
+    private Date createddt;
 
-    public String getServiceID() {
-        return serviceID;
+    private Date updateddt;
+
+    private static final long serialVersionUID = 1L;
+
+    public Byte getAlive() {
+        return alive;
     }
 
-    public void setServiceID(String serviceID) {
-        this.serviceID = serviceID;
+    public void setAlive(Byte alive) {
+        this.alive = alive;
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public Date getCreateddt() {
+        return createddt;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setCreateddt(Date createddt) {
+        this.createddt = createddt;
     }
 
-    public String getStatus() {
-        return status;
+    public Date getUpdateddt() {
+        return updateddt;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setUpdateddt(Date updateddt) {
+        this.updateddt = updateddt;
     }
 }

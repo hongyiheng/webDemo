@@ -3,7 +3,9 @@ package com.hyh.dang.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.hyh.dang.anno.RateLimit;
 import com.hyh.dang.config.MailProperties;
+import com.hyh.dang.dao.ConsulInfoMapper;
 import com.hyh.dang.entity.ConsulInfo;
+import com.hyh.dang.entity.ConsulInfoExample;
 import com.hyh.dang.lua.RedisTest;
 
 import io.swagger.annotations.Api;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @RestController
@@ -31,7 +34,7 @@ public class TestController {
     private RedisTest redisTest;
 
     @Resource
-    private MailProperties mailProperties;
+    private ConsulInfoMapper consulInfoMapper;
 
 //    @Autowired
 //    private KafkaTemplate<Object, Object> template;
@@ -54,8 +57,6 @@ public class TestController {
         return str;
     }
 
-
-
     @GetMapping(value = "/hello")
     @ApiOperation(value="hello")
     public String hello(){
@@ -63,11 +64,15 @@ public class TestController {
     }
 
 
-    @GetMapping(value = "/mailProperties")
-    @ApiOperation(value="mailProperties")
-    public String mailProperties(){
-        return JSONObject.toJSONString(mailProperties);
+    @PostMapping(value = "/getList")
+    @ApiOperation(value="getList")
+    public List<ConsulInfo> getConsulInfoList(@RequestBody ConsulInfo str) {
+        ConsulInfoExample consulInfoExample = new ConsulInfoExample();
+        ConsulInfoExample.Criteria criteria = consulInfoExample.createCriteria();
+        criteria.andAddressEqualTo(str.getAddress());
+        return consulInfoMapper.selectByExample(consulInfoExample);
     }
+
 
 
 

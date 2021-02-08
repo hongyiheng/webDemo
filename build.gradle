@@ -2,6 +2,9 @@ plugins {
     id 'org.springframework.boot' version '2.4.1'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    //gradle提供的mybatis generator插件
+    id 'com.arenagod.gradle.MybatisGenerator' version '1.4'
+
 }
 
 group = 'com.hyh'
@@ -12,7 +15,18 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
+    apply plugin: 'com.arenagod.gradle.MybatisGenerator'
+
+
+    dependencies {
+        compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+        compile group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: '1.4.0'
+        compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+        compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.1.22'
+        compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.2.10'
+    }
 }
+
 
 configurations {
     compileOnly {
@@ -48,13 +62,21 @@ dependencies {
 //    compile group: 'org.springframework.plugin', name: 'spring-plugin-core', version: '2.0.0.RELEASE'
 //    compile group: 'org.springframework.plugin', name: 'spring-plugin-metadata', version: '2.0.0.RELEASE'
 
-    compile group: 'io.springfox', name: 'springfox-swagger2', version:'2.9.2'
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version:'2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
-
-
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+    compile group: 'org.mybatis.generator', name: 'mybatis-generator-core', version: '1.4.0'
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+    compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: '1.1.22'
+    compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.2.10'
 //    compile 'org.springframework.kafka:spring-kafka'
 
+}
+
+mybatisGenerator {
+    verbose = true
+    configFile = 'src/main/resources/generator.xml'
 }
 
 test {
