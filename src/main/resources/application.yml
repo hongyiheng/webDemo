@@ -42,11 +42,11 @@ http:
 
 server:
   port: 9999
-  ssl:
-    key-store: classpath:client.p12
-    key-store-password: 123456
-    keyAlias: client
-    keyStoreType: PKCS12
+#  ssl:
+#    key-store: classpath:client.p12
+#    key-store-password: 123456
+#    keyAlias: client
+#    keyStoreType: PKCS12
 
 mail:
   from: me@localhost

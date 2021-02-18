@@ -4,10 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.hyh.dang.anno.RateLimit;
 import com.hyh.dang.config.MailProperties;
 import com.hyh.dang.dao.ConsulInfoMapper;
+import com.hyh.dang.dao.JijinMapper;
 import com.hyh.dang.entity.ConsulInfo;
 import com.hyh.dang.entity.ConsulInfoExample;
+import com.hyh.dang.entity.Jijin;
 import com.hyh.dang.lua.RedisTest;
 
+import com.hyh.dang.service.JiJinService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -35,6 +39,9 @@ public class TestController {
 
     @Resource
     private ConsulInfoMapper consulInfoMapper;
+
+    @Resource
+    private JiJinService jiJinService;
 
 //    @Autowired
 //    private KafkaTemplate<Object, Object> template;
@@ -72,6 +79,28 @@ public class TestController {
         criteria.andAddressEqualTo(str.getAddress());
         return consulInfoMapper.selectByExample(consulInfoExample);
     }
+
+
+    @GetMapping(value = "/getJinAll")
+    @ApiOperation(value = "/getJinAll")
+    public List<Jijin> getJinAll(){
+        return jiJinService.findAll();
+    }
+
+
+    @GetMapping(value = "/deleteAll")
+    @ApiOperation(value = "/deleteAll")
+    public int deleteAll(){
+        return jiJinService.deleteAll();
+    }
+
+    @GetMapping(value = "/produceExcel")
+    @ApiOperation(value = "/produceExcel")
+    public void produceExcel() throws InterruptedException {
+        jiJinService.produceExcel();
+    }
+
+
 
 
 
