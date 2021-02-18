@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyh.dang.dao.JijinMapper">
+  <resultMap id="BaseResultMap" type="com.hyh.dang.entity.Jijin">
+    <result column="Num" jdbcType="VARCHAR" property="num" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="CreateDT" jdbcType="VARCHAR" property="createdt" />
+    <result column="Raise" jdbcType="VARCHAR" property="raise" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Num, Name, CreateDT, Raise
+  </sql>
+  <select id="selectByExample" parameterType="com.hyh.dang.entity.JijinExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jijin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.hyh.dang.entity.JijinExample">
+    delete from jijin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hyh.dang.entity.Jijin">
+    insert into jijin (Num, Name, CreateDT, 
+      Raise)
+    values (#{num,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createdt,jdbcType=VARCHAR}, 
+      #{raise,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hyh.dang.entity.Jijin">
+    insert into jijin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="num != null">
+        Num,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="createdt != null">
+        CreateDT,
+      </if>
+      <if test="raise != null">
+        Raise,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="num != null">
+        #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createdt != null">
+        #{createdt,jdbcType=VARCHAR},
+      </if>
+      <if test="raise != null">
+        #{raise,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hyh.dang.entity.JijinExample" resultType="java.lang.Long">
+    select count(*) from jijin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jijin
+    <set>
+      <if test="record.num != null">
+        Num = #{record.num,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdt != null">
+        CreateDT = #{record.createdt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.raise != null">
+        Raise = #{record.raise,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jijin
+    set Num = #{record.num,jdbcType=VARCHAR},
+      Name = #{record.name,jdbcType=VARCHAR},
+      CreateDT = #{record.createdt,jdbcType=VARCHAR},
+      Raise = #{record.raise,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
