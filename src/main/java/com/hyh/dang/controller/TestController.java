@@ -2,6 +2,7 @@ package com.hyh.dang.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hyh.dang.anno.RateLimit;
+import com.hyh.dang.batch.ConsoleJobTest;
 import com.hyh.dang.config.MailProperties;
 import com.hyh.dang.dao.ConsulInfoMapper;
 import com.hyh.dang.entity.ConsulInfo;
@@ -12,6 +13,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.kafka.annotation.KafkaListener;
@@ -36,6 +41,9 @@ public class TestController {
     @Resource
     private ConsulInfoMapper consulInfoMapper;
 
+    @Resource
+    private ConsoleJobTest consoleJobTest;
+
 //    @Autowired
 //    private KafkaTemplate<Object, Object> template;
 
@@ -57,9 +65,10 @@ public class TestController {
         return str;
     }
 
-    @GetMapping(value = "/hello")
-    @ApiOperation(value="hello")
-    public String hello(){
+    @GetMapping(value = "/helloBatch")
+    @ApiOperation(value="helloBatch")
+    public String hello() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        consoleJobTest.testConsoleJob2();
         return "hello";
     }
 
