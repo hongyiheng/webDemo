@@ -74,6 +74,8 @@ dependencies {
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-batch'
 
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp'
+
 
 }
 

@@ -1,5 +1,6 @@
 package com.hyh.dang.controller;
 
+import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.hyh.dang.anno.RateLimit;
 import com.hyh.dang.batch.ConsoleJobTest;
@@ -9,6 +10,8 @@ import com.hyh.dang.entity.ConsulInfo;
 import com.hyh.dang.entity.ConsulInfoExample;
 import com.hyh.dang.lua.RedisTest;
 
+import com.hyh.dang.rabbitmq.Order;
+import com.hyh.dang.rabbitmq.Sender.OrderSender;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -43,6 +46,9 @@ public class TestController {
 
     @Resource
     private ConsoleJobTest consoleJobTest;
+
+    @Resource
+    private OrderSender orderSender;
 
 //    @Autowired
 //    private KafkaTemplate<Object, Object> template;
@@ -80,6 +86,16 @@ public class TestController {
         ConsulInfoExample.Criteria criteria = consulInfoExample.createCriteria();
         criteria.andAddressEqualTo(str.getAddress());
         return consulInfoMapper.selectByExample(consulInfoExample);
+    }
+
+    @GetMapping(value = "/mqTest")
+    @ApiOperation(value="mqTest")
+    public void mqTest() throws Exception {
+        Order order = new Order();
+        order.setId("201809062009010001");
+        order.setName("测试订单1");
+        order.setMessageId(System.currentTimeMillis() + "$" + IdUtil.simpleUUID());
+        this.orderSender.sendMsg(order);
     }
 
 

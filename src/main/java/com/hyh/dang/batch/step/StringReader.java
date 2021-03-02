@@ -17,6 +17,7 @@ import org.springframework.batch.item.UnexpectedInputException;
 public class StringReader implements ItemReader<String> {
     private String[] messages = {"aaa1","aaa2","aaa3","aaa4"};
     private int count = 0;
+    //read是T泛型，可以有多钟数据格式返回，正常批处理返回的是数据库的集合
     @Override
     public String read() throws UnexpectedInputException, ParseException, NonTransientResourceException {
         if(count < messages.length){

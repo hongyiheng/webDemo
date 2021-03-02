@@ -8,6 +8,14 @@ spring:
     username: root
     password: 123456
 
+  rabbitmq:
+    addresses: 159.75.140.121:5672
+    connection-timeout: 15000
+    password: hyh804002
+    username: hyh
+    virtual-host: /
+
+
 #  batch:
 #    initialize-schema: always
 
