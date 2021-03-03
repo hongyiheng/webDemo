@@ -5,6 +5,7 @@ import com.hyh.dang.rabbitmqDemo.config.RabbitMqExchange;
 import com.hyh.dang.rabbitmqDemo.config.RabbitMqQueue;
 import com.hyh.dang.rabbitmqDemo.impl.DefaultRabbitMqRegister;
 import com.hyh.dang.rabbitmqDemo.impl.RabbitMqServiceImpl;
+import com.rabbitmq.client.AMQP;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

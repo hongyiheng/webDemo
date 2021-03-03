@@ -76,6 +76,10 @@ public class DefaultRabbitMqRegister implements IRabbitMqRegister, SmartLifecycl
         }
         arguments.put("x-dead-letter-exchange", binding.exchange().exchangeName());
         arguments.put("x-dead-letter-routing-key", binding.routing().routingKey());
+        // 声明队列 第二个参durable：是否要持久化；
+        // 第三个参exclusive：如果设置true的化，队列将变成私有的，只有创建队列的应用程序才能够消费队列消息；
+        // 第四个参auto-delete：当最后一个消费者取消订阅的时候，队列会自动移除；
+        // 第五个参arguments：加上"x-dead-letter-exchange"，"x-dead-letter-routing-key" 绑定交换机就是死信队列
         channel.queueDeclare(queue.delayQueueName(), queue.durable(), queue.exclusive(), queue.autoDelete(), arguments);
         // 将交换机和队列绑定
         channel.queueBind(queue.delayQueueName(), exchange.delayExchangeName(), binding.routing().routingKey());

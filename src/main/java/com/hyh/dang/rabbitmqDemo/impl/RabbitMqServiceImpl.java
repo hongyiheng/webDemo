@@ -7,6 +7,7 @@ import com.hyh.dang.rabbitmqDemo.IRabbitMqService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 默认的RabbitMQ 实现
  */
-@Service
 public class RabbitMqServiceImpl implements IRabbitMqService, RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback {
 
     private Logger logger = LoggerFactory.getLogger(RabbitMqServiceImpl.class);
@@ -32,8 +32,8 @@ public class RabbitMqServiceImpl implements IRabbitMqService, RabbitTemplate.Con
 
     @PostConstruct
     public void init() {
-        rabbitTemplate.setConfirmCallback(this);
-        rabbitTemplate.setReturnCallback(this);
+        rabbitTemplate.setConfirmCallback(this::confirm);
+        rabbitTemplate.setReturnCallback(this::returnedMessage);
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
     }
 
@@ -49,13 +49,19 @@ public class RabbitMqServiceImpl implements IRabbitMqService, RabbitTemplate.Con
         if (delay > 0) {
             MessagePostProcessor processor = (Message message) -> {
                 message.getMessageProperties().setExpiration(delay + "");
+                message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
                 return message;
             };
             rabbitTemplate.convertAndSend(exchange.delayExchangeName(), routing.routingKey(), msg, processor, correlationId);
         } else {
-            rabbitTemplate.convertAndSend(exchange.exchangeName(), routing.routingKey(), msg, correlationId);
+            MessagePostProcessor processor = (Message message) -> {
+                message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                return message;
+            };
+            rabbitTemplate.convertAndSend(exchange.exchangeName(), routing.routingKey(), msg, processor, correlationId);
         }
     }
+
     /**
      * 消息发送的回调
      *

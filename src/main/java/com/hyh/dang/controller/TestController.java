@@ -10,8 +10,6 @@ import com.hyh.dang.entity.ConsulInfo;
 import com.hyh.dang.entity.ConsulInfoExample;
 import com.hyh.dang.lua.RedisTest;
 
-import com.hyh.dang.rabbitmq.Order;
-import com.hyh.dang.rabbitmq.Sender.OrderSender;
 import com.hyh.dang.rabbitmqDemo.IRabbitMqService;
 import com.hyh.dang.rabbitmqDemo.config.RabbitMqExchange;
 import com.hyh.dang.rabbitmqDemo.config.RabbitMqRouting;
@@ -49,9 +47,6 @@ public class TestController {
 
     @Resource
     private ConsoleJobTest consoleJobTest;
-
-    @Resource
-    private OrderSender orderSender;
 
     @Resource
     private IRabbitMqService rabbitMqService;
@@ -92,16 +87,6 @@ public class TestController {
         ConsulInfoExample.Criteria criteria = consulInfoExample.createCriteria();
         criteria.andAddressEqualTo(str.getAddress());
         return consulInfoMapper.selectByExample(consulInfoExample);
-    }
-
-    @GetMapping(value = "/mqTest")
-    @ApiOperation(value="mqTest")
-    public void mqTest() throws Exception {
-        Order order = new Order();
-        order.setId("201809062009010001");
-        order.setName("测试订单1");
-        order.setMessageId(System.currentTimeMillis() + "$" + IdUtil.simpleUUID());
-        this.orderSender.sendMsg(order);
     }
 
     @GetMapping(value = "/mqDelayTest")
