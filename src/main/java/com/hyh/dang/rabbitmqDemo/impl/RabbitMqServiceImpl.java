@@ -49,6 +49,7 @@ public class RabbitMqServiceImpl implements IRabbitMqService, RabbitTemplate.Con
         if (delay > 0) {
             MessagePostProcessor processor = (Message message) -> {
                 message.getMessageProperties().setExpiration(delay + "");
+                //设置Delivery mode 为2
                 message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
                 return message;
             };
