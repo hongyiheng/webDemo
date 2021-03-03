@@ -12,6 +12,9 @@ import com.hyh.dang.lua.RedisTest;
 
 import com.hyh.dang.rabbitmq.Order;
 import com.hyh.dang.rabbitmq.Sender.OrderSender;
+import com.hyh.dang.rabbitmqDemo.IRabbitMqService;
+import com.hyh.dang.rabbitmqDemo.config.RabbitMqExchange;
+import com.hyh.dang.rabbitmqDemo.config.RabbitMqRouting;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -49,6 +52,9 @@ public class TestController {
 
     @Resource
     private OrderSender orderSender;
+
+    @Resource
+    private IRabbitMqService rabbitMqService;
 
 //    @Autowired
 //    private KafkaTemplate<Object, Object> template;
@@ -98,6 +104,11 @@ public class TestController {
         this.orderSender.sendMsg(order);
     }
 
+    @GetMapping(value = "/mqDelayTest")
+    @ApiOperation(value="mqDelayTest")
+    public void mqDelayTest() throws Exception {
+        rabbitMqService.send(RabbitMqExchange.MQ_EXCHANGE_TEST, RabbitMqRouting.MQ_ROUTING_TEST,"测试发送消息",30*1000);
+    }
 
 
 
